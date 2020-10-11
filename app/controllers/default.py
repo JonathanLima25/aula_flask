@@ -1,15 +1,8 @@
 from app import app
-
+from flask import render_template
 
 @app.route('/index')
 @app.route('/')
 def index():
-    return 'Hello world'
+    return render_template('index.html')
 
-@app.route('/test')
-@app.route('/test/<name>')
-def teste(name=None):
-    if name:
-        return '<h1>Olá, %s!</h1>' %name
-    else:
-        return '<h1>Olá!</h1>'
