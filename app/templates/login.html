@@ -8,6 +8,7 @@
     <form action="" method="POST">
         {{ form.csrf_token }}
         <div class="form-group">
+            <p></p>
             <label>Username</label>
             {{ form.username(class="form-control", placeholder="seu usuário") }}
             {% if form.errors.username %}
