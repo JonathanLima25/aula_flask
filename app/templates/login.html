@@ -4,6 +4,7 @@
 
 
 <div class="col-md-4 col-md-offset-4">
+    <p></p>
     <h2>Login</h2>
     <form action="" method="POST">
         {{ form.csrf_token }}
@@ -11,24 +12,29 @@
             <p></p>
             <label>Username</label>
             {{ form.username(class="form-control", placeholder="seu usuário") }}
+
             {% if form.errors.username %}
-            <div class="alert alert-danger" role="alert">{{ form.errors.username }}</div>
+            <div class="alert alert-warning" role="alert">
+                {{ form.errors.username }}
+            </div>            
             {% endif %}
         </div>
         <div class="form-group" method="POST">
             <label>Password</label>
             {{ form.password(class="form-control") }}
             {% if form.errors.password %}
-            <div class="alert alert-danger" role="alert">{{ form.errors.password }}</div>
+            <div class="alert alert-warning" role="alert">
+                {{ form.errors.password }}
+            </div>
             {% endif %}
         </div>
-        <div class="checkbox">
+        <div class="form-check">
             <label>
                 {{ form.remember_me }} Remember Me
             </label>
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 {% endblock %}
