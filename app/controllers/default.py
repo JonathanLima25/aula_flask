@@ -1,7 +1,13 @@
-from app import app, db
-from flask import render_template
-from app.models.forms import LoginForm 
+from flask import render_template, flash, redirect, url_for
+from flask_login import login_user, logout_user
+from app import app, db, lm
+
 from app.models.tables import User
+from app.models.forms import LoginForm 
+
+@lm.user_loader
+def load_user(session_token):
+    return User.query.filter_by(session_token=session_token).first()
 
 @app.route('/index')
 @app.route('/')
@@ -12,16 +18,20 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        print(form.username.data)
-        print(form.password.data)
-    else:
-        print(form.errors)
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.password == form.password.data:
+            login_user(user)
+            return redirect(url_for("index"))
+            flask("Logged in.")
+        else:
+            flash("Invalid login.")
+    
     return render_template('login.html', form=form)
 
-@app.route('/test/<info>')
-@app.route('/test', defaults={'info':None})
-def test(info):
-    r = User.query.filter_by(password="12345").all()
-    print(r)
-    return "OK"
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash("Logged out.")
+    return redirect(url_for("login"))
+
 
